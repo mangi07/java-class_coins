@@ -14,11 +14,12 @@ public class CoinCalculator {
         change += 100*Integer.parseInt(
                 amountOfChange.substring(0, amountOfChange.length() - 3));
         int coins = 0;
-        int[] denomination = {100, 50, 25, 10, 5, 1};
-        for (int x = 0; x < denomination.length; x++){
-            while (change > denomination[x]-1) {
-                coins += change / denomination[x];
-                change = change % denomination[x];
+        int[] USdenomination = {100, 50, 25, 10, 5, 1};
+        int[] EUdenomination = {200, 100, 50, 20, 10, 5, 2, 1};
+        for (int x = 0; x < USdenomination.length; x++){
+            while (change > USdenomination[x]-1) {
+                coins += change / USdenomination[x];
+                change = change % USdenomination[x];
             }
         }
         if (coins > 0) {

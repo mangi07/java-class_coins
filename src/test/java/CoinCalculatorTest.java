@@ -1,3 +1,4 @@
+import com.ben.CoinCalculator;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

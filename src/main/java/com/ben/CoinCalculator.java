@@ -1,3 +1,5 @@
+package com.ben;
+
 import java.util.ArrayList;
 
 /**
@@ -16,10 +18,10 @@ public class CoinCalculator {
         int coins = 0;
         int[] USdenomination = {100, 50, 25, 10, 5, 1};
         int[] EUdenomination = {200, 100, 50, 20, 10, 5, 2, 1};
-        for (int x = 0; x < USdenomination.length; x++){
-            while (change > USdenomination[x]-1) {
-                coins += change / USdenomination[x];
-                change = change % USdenomination[x];
+        for (int x = 0; x < EUdenomination.length; x++){
+            while (change > EUdenomination[x]-1) {
+                coins += change / EUdenomination[x];
+                change = change % EUdenomination[x];
             }
         }
         if (coins > 0) {

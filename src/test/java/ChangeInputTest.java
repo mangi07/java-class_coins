@@ -1,4 +1,4 @@
-import com.ben.ChangeInput;
+import com.ben.ChangeInputProcessor;
 import org.junit.Test;
 
 /**
@@ -8,14 +8,15 @@ public class ChangeInputTest {
 
     @Test
     public void parseShouldBeRejected () {
-        ChangeInput changeInput = new ChangeInput();
-        changeInput.getAmountInCents();
+        ChangeInputProcessor changeInput = new ChangeInputProcessor();
+
+
         // finish
     }
 
     @Test
     public void inputShouldBeTaken () {
-        ChangeInput changeInput = new ChangeInput();
-        changeInput.getChange();
+        ChangeInputProcessor changeInput = new ChangeInputProcessor();
+        changeInput.getCents();
     }
 }

@@ -1,5 +1,5 @@
-import com.ben.Denomination;
-import com.ben.DenominationFactory;
+import com.ben.Currency;
+import com.ben.CurrencyFactory;
 import org.junit.Test;
 
 /**
@@ -9,12 +9,12 @@ public class DenominationFactoryTest {
 
     @Test
     public void eurosShouldBeUsed(){
-        Denomination d = DenominationFactory.createCoins("EU");
+        Currency d = CurrencyFactory.createCoins("EU");
     }
 
     @Test
     public void usdShouldBeUsed(){
-        Denomination d = DenominationFactory.createCoins("USD");
+        Currency d = CurrencyFactory.createCoins("USD");
     }
 
 }

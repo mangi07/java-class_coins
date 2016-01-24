@@ -12,16 +12,12 @@ public class CoinCalculator {
 
 
     public String calculateChange(String amountOfChange) {
-        int change = Integer.parseInt(amountOfChange.substring(amountOfChange.length() - 2));
-        change += 100*Integer.parseInt(
-                amountOfChange.substring(0, amountOfChange.length() - 3));
-        int coins = 0;
-        int[] USdenomination = {100, 50, 25, 10, 5, 1};
-        int[] EUdenomination = {200, 100, 50, 20, 10, 5, 2, 1};
-        for (int x = 0; x < EUdenomination.length; x++){
-            while (change > EUdenomination[x]-1) {
-                coins += change / EUdenomination[x];
-                change = change % EUdenomination[x];
+        Currency c = CurrencyFactory.createCoins("USD");
+        int[] coins = c.getCoins();
+        for (int x = 0; x < coins.length; x++){
+            while (change > coins[x]-1) {
+                coins += change / coins[x];
+                change = change % coins[x];
             }
         }
         if (coins > 0) {

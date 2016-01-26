@@ -1,17 +1,14 @@
 package com.ben;
 
+import java.util.Iterator;
+
 /**
  * Created by ben on 1/22/2016.
  */
-public class Currency {
+public abstract class Currency {
 
-    public Currency (int[] coins, String currencyCode) {
-        this.coins = coins;
-        this.currencyCode = currencyCode;
-    }
-
-    private int[] coins;
-    private String currencyCode;
+    protected int[] coins;
+    protected String currencyCode;
 
     public int[] getCoins() {
         return coins;

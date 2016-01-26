@@ -14,7 +14,6 @@ public class CurrencyFactory {
     public static Currency createCoins(String currency) throws IllegalArgumentException {
         if (currency.equals("USD")) {
             d = new Currency(
-                    new int[]{100, 50, 25, 10, 5, 1}, "USD"
             );
        } else if (currency.equals("EU")) {
             d = new Currency(

@@ -11,16 +11,17 @@ import java.util.ArrayList;
 public class CoinCalculator {
 
 
-    public String calculateChange(String amountOfChange) {
-        Currency c = CurrencyFactory.createCoins("USD");
+    public String calculateChange(int amountInCents, String currencyCode) {
+        Currency c = CurrencyFactory.createCoins(currencyCode);
+        int coinCount = 0;
         int[] coins = c.getCoins();
         for (int x = 0; x < coins.length; x++){
-            while (change > coins[x]-1) {
-                coins += change / coins[x];
-                change = change % coins[x];
+            while (amountInCents > coins[x]-1) {
+                coinCount += amountInCents / coins[x];
+                amountInCents = amountInCents % coins[x];
             }
         }
-        if (coins > 0) {
+        if (coinCount > 0) {
             return coins + " coins";
         } else {
             return "No coins returned";

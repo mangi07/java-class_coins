@@ -1,4 +1,5 @@
 import com.ben.CoinCalculator;
+import com.ben.currencies.CoinType;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +16,7 @@ public class CoinCalculatorTest {
     public void zeroChangeMeansYouGetZeroCoins() {
         CoinCalculator coinCalculator = new CoinCalculator();
 
-        String coinMessage = coinCalculator.calculateChange("$0.00");
+        String coinMessage = coinCalculator.calculateChange(0, CoinType.USD);
 
         assertEquals("No coins returned", coinMessage);
     }
@@ -24,7 +25,7 @@ public class CoinCalculatorTest {
     public void oneCentShouldGiveYouOnePenny() {
         CoinCalculator coinCalculator = new CoinCalculator();
 
-        String coinMessage = coinCalculator.calculateChange("$0.01");
+        String coinMessage = coinCalculator.calculateChange(1, CoinType.USD);
 
         assertEquals("1 coins", coinMessage);
     }
@@ -33,7 +34,7 @@ public class CoinCalculatorTest {
     public void tenCentsShouldGiveYouOneDime() {
         CoinCalculator coinCalculator = new CoinCalculator();
 
-        String coinMessage = coinCalculator.calculateChange("$0.10");
+        String coinMessage = coinCalculator.calculateChange(10, CoinType.USD);
 
         assertEquals("1 coins", coinMessage);
     }
@@ -42,9 +43,9 @@ public class CoinCalculatorTest {
     public void threeDollarsShouldGiveYouThreeCoins() {
         CoinCalculator coinCalculator = new CoinCalculator();
 
-        String coinMessage = coinCalculator.calculateChange("$3.00");
+         String coinMessage = coinCalculator.calculateChange(300, CoinType.USD);
 
-        assertEquals("4 coins", coinMessage);
+         assertEquals("3 coins", coinMessage);
     }
 
 }

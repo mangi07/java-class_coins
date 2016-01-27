@@ -1,5 +1,7 @@
 package com.ben;
 
+import com.ben.currencies.CoinType;
+
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -11,9 +13,8 @@ import java.util.regex.Pattern;
 public class ChangeInputProcessor {
 
     public ChangeInputProcessor () {
-        String[] currencyCodes = CurrencyFactory.getCurrencyCodeList();
         StringBuilder builder = new StringBuilder("^(\\d+)\\.(\\d{2})\\s(");
-        for (String currencyCode: currencyCodes) {
+        for (CoinType currencyCode : CoinType.values()) {
             builder.append("(" + currencyCode + ")|");
         }
         builder.deleteCharAt(builder.length()-1);
@@ -25,17 +26,17 @@ public class ChangeInputProcessor {
         builder.delete(0, builder.length());
         builder.append("Please enter change as x.xx <currency code>.\n");
         builder.append("Use one of the following currencies:\n");
-        for (String currencyCode: currencyCodes) {
+        for (CoinType currencyCode : CoinType.values()) {
             builder.append(currencyCode + "\n");
         }
-        builder.append("For example: 365.12 " + currencyCodes[0] + "\n");
+        builder.append("For example: 365.12 " + CoinType.values()[0] + "\n");
         userPrompt = builder.toString();
     }
     private String CURRENCY_REGEX;
     private Pattern pattern;
     private Matcher matcher;
 
-    private String currencyCode;
+    private CoinType currencyCode;
     private int cents = -1;
     private String inputString;
     String userPrompt;
@@ -46,7 +47,7 @@ public class ChangeInputProcessor {
         inputString = in.nextLine();
     }
 
-    public void parseInput () throws IOException {
+    public void parseInput() throws IOException, IllegalArgumentException {
 
         if (matcher.matches()){
             cents = 0;
@@ -55,7 +56,8 @@ public class ChangeInputProcessor {
 
             cents += Integer.parseInt(left) * 100;
             cents += Integer.parseInt(right);
-            currencyCode = matcher.group(2).toLowerCase();
+            String strCode = matcher.group(2).toLowerCase();
+            currencyCode = CoinType.valueOf(strCode);
         } else {
             throw new IOException("Invalid format: " + inputString);
         }
@@ -65,7 +67,7 @@ public class ChangeInputProcessor {
         return cents;
     }
 
-    public String getCurrencyCode () {
+    public CoinType getCurrencyCode() {
         return currencyCode;
     }
 

@@ -1,5 +1,7 @@
 package com.ben;
 
+import com.ben.currencies.CoinType;
+
 import java.util.Iterator;
 
 /**
@@ -8,13 +10,13 @@ import java.util.Iterator;
 public abstract class Currency {
 
     protected int[] coins;
-    protected String currencyCode;
+    protected CoinType currencyCode;
 
     public int[] getCoins() {
         return coins;
     }
 
-    public String getCurrencyCode() {
+    public CoinType getCurrencyCode() {
         return currencyCode;
     }
 

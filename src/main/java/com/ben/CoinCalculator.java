@@ -1,5 +1,7 @@
 package com.ben;
 
+import com.ben.currencies.CoinType;
+
 import java.util.ArrayList;
 
 /**
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 public class CoinCalculator {
 
 
-    public String calculateChange(int amountInCents, String currencyCode) {
+    public String calculateChange(int amountInCents, CoinType currencyCode) {
         Currency c = CurrencyFactory.createCoins(currencyCode);
         int coinCount = 0;
         int[] coins = c.getCoins();

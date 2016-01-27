@@ -1,5 +1,9 @@
 package com.ben;
 
+import com.ben.currencies.CoinType;
+
+import java.io.IOException;
+
 /**
  * User: Ben Olson
  * Modified from user mpmenne
@@ -11,13 +15,24 @@ public class Greedy {
 
     public static void main(String[] varArgs) {
 
-        if (varArgs.length > 0) {
-            CoinCalculator coinCalculator = new CoinCalculator();
-            String changeMessage = coinCalculator.calculateChange(varArgs[0]);
-            System.out.println(changeMessage);
-        } else {
-            throw new IllegalArgumentException("No value given");
+        CoinCalculator coinCalculator = new CoinCalculator();
+        ChangeInputProcessor inputProcessor = new ChangeInputProcessor();
+
+        inputProcessor.getUserInput();
+        try {
+            inputProcessor.parseInput();
+        } catch (IOException ioe) {
+            ioe.getMessage();
+            System.exit(1);
+        } catch (IllegalArgumentException iae) {
+            iae.getMessage();
+            System.exit(1);
         }
+
+        int amountInCents = inputProcessor.getCents();
+        CoinType currency = inputProcessor.getCurrencyCode();
+        String changeMessage = coinCalculator.calculateChange(amountInCents, currency);
+        System.out.println(changeMessage);
 
     }
 

@@ -1,27 +1,28 @@
 package com.ben;
 
+import com.ben.currencies.CoinType;
+import com.ben.currencies.EUcoins;
+import com.ben.currencies.USDcoins;
+
 /**
  * Created by ben on 1/22/2016.
  */
 public class CurrencyFactory {
 
-    private static String[] currencyCodeList = {"USD", "EU"};
-    private static Currency d;
+    private static Currency d = null;
 
-    public static String[] getCurrencyCodeList() {
-        return  currencyCodeList;
-    }
-    public static Currency createCoins(String currency) throws IllegalArgumentException {
-        if (currency.equals("USD")) {
-            d = new Currency(
-            );
-       } else if (currency.equals("EU")) {
-            d = new Currency(
-                    new int[]{200, 100, 50, 20, 10, 5, 2, 1}, "EU"
-            );
-       } else {
-            throw new IllegalArgumentException("Invalid currency code");
+    public static Currency createCoins(CoinType coinType) throws IllegalArgumentException {
+        switch (coinType) {
+            case USD:
+                d = new USDcoins();
+                break;
+            case EU:
+                d = new EUcoins();
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid currency code");
         }
+
         return d;
     }
 }

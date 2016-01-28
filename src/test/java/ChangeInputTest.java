@@ -1,7 +1,11 @@
 import com.ben.ChangeInputProcessor;
-import junit.framework.Assert;
+import com.ben.currencies.CoinType;
+import org.junit.Before;
 import org.junit.Test;
+
 import java.io.IOException;
+
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.fail;
 
 /**
@@ -9,15 +13,16 @@ import static junit.framework.TestCase.fail;
  */
 public class ChangeInputTest {
 
-    @Test
-    public void setUp() {
-        System.out.println("setUP");
+    ChangeInputProcessor changeInput;
+
+    @Before
+    public void setUp() throws Exception {
+        changeInput = new ChangeInputProcessor();
     }
 
     @Test
     public void parseShouldBeRejected() {
-        ChangeInputProcessor changeInput = new ChangeInputProcessor();
-        String[] inputSet = {"UD", "0 USD", ".00 USD", "0.000 USD", "0.00 USD"};
+        String[] inputSet = {"US", "0 USD", ".00 USD", "0.000 USD"};
         for (String input : inputSet) {
             changeInput.setInput(input);
             try {
@@ -30,8 +35,23 @@ public class ChangeInputTest {
     }
 
     @Test
-    public void inputShouldBeTaken() {
-        ChangeInputProcessor changeInput = new ChangeInputProcessor();
-        changeInput.getCents();
+    public void inputShouldBeTaken() throws IOException {
+        String[] inputSet = {"0.00 USD", "3.01 USD", "33000.99 USD"};
+        for (String input : inputSet) {
+            changeInput.setInput(input);
+            changeInput.parseInput();
+        }
+    }
+
+    @Test
+    public void inputShouldParseCorrectly() throws IOException {
+        String[] inputSet = {"3.00 USD", "3.01 USD", "0.95 USD"};
+        int[] correctCents = {300, 301, 95};
+        for (int i = 0; i < inputSet.length; i++) {
+            changeInput.setInput(inputSet[i]);
+            changeInput.parseInput();
+            assertEquals(changeInput.getCents(), correctCents[i]);
+            assertEquals(changeInput.getCurrencyCode(), CoinType.USD);
+        }
     }
 }

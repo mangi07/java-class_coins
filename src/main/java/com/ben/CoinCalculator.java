@@ -2,8 +2,6 @@ package com.ben;
 
 import com.ben.currencies.CoinType;
 
-import java.util.ArrayList;
-
 /**
  * User: Ben Olson
  * Modified from user mpmenne

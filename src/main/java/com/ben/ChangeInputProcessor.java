@@ -76,10 +76,6 @@ public class ChangeInputProcessor {
         return currencyCode;
     }
 
-    public String getCURRENCY_REGEX () {
-        return CURRENCY_REGEX;
-    }
-
     public void setInput(String s) {
         inputString = s;
         matcher = pattern.matcher(inputString);

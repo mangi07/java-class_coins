@@ -21,7 +21,6 @@ public class ChangeInputProcessor {
         builder.append(")$");
         CURRENCY_REGEX = builder.toString();
         pattern = Pattern.compile(CURRENCY_REGEX);
-        matcher = pattern.matcher(inputString);
 
         builder.delete(0, builder.length());
         builder.append("Please enter change as x.xx <currency code>.\n");
@@ -45,18 +44,23 @@ public class ChangeInputProcessor {
         Scanner in = new Scanner(System.in);
         System.out.println(userPrompt);
         inputString = in.nextLine();
+        matcher = pattern.matcher(inputString);
     }
 
     public void parseInput() throws IOException, IllegalArgumentException {
 
+        if (matcher == null) {
+            throw new IOException(
+                    "Error in parseInput(): no input set");
+        }
         if (matcher.matches()){
             cents = 0;
-            String left = matcher.group(0);
-            String right = matcher.group(1);
+            String left = matcher.group(1);
+            String right = matcher.group(2);
 
             cents += Integer.parseInt(left) * 100;
             cents += Integer.parseInt(right);
-            String strCode = matcher.group(2).toLowerCase();
+            String strCode = matcher.group(3).toUpperCase();
             currencyCode = CoinType.valueOf(strCode);
         } else {
             throw new IOException("Invalid format: " + inputString);
@@ -67,6 +71,7 @@ public class ChangeInputProcessor {
         return cents;
     }
 
+    /* Methods used for testing */
     public CoinType getCurrencyCode() {
         return currencyCode;
     }
@@ -75,4 +80,8 @@ public class ChangeInputProcessor {
         return CURRENCY_REGEX;
     }
 
+    public void setInput(String s) {
+        inputString = s;
+        matcher = pattern.matcher(inputString);
+    }
 }

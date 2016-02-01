@@ -1,6 +1,8 @@
 package com.ben;
 
 import com.ben.currencies.CoinType;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 
@@ -12,28 +14,45 @@ import java.io.IOException;
  */
 public class Greedy {
 
+    ApplicationContext context;
+    CoinCalculator coinCalculator;
+    ChangeInputProcessor inputProcessor;
+
+    public Greedy() {
+        context = new ClassPathXmlApplicationContext(
+                "application-context.xml");
+        coinCalculator =
+                (CoinCalculator) context.getBean("coinCalculator");
+        inputProcessor =
+                (ChangeInputProcessor) context.getBean("inputProcessor");
+    }
 
     public static void main(String[] varArgs) {
 
-        CoinCalculator coinCalculator = new CoinCalculator();
-        ChangeInputProcessor inputProcessor = new ChangeInputProcessor();
+        Greedy greedy = new Greedy();
 
-        inputProcessor.getUserInput();
-        try {
-            inputProcessor.parseInput();
-        } catch (IOException ioe) {
-            ioe.getMessage();
-            System.exit(1);
-        } catch (IllegalArgumentException iae) {
-            iae.getMessage();
-            System.exit(1);
-        }
-
-        int amountInCents = inputProcessor.getCents();
-        CoinType currency = inputProcessor.getCurrencyCode();
-        String changeMessage = coinCalculator.calculateChange(amountInCents, currency);
-        System.out.println(changeMessage);
+        greedy.getUserInput();
+        greedy.calculateChange();
 
     }
 
+    public void getUserInput() {
+        this.inputProcessor.getUserInput();
+        try {
+            this.inputProcessor.parseInput();
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+            System.exit(1);
+        } catch (IllegalArgumentException iae) {
+            System.out.println(iae.getMessage());
+            System.exit(1);
+        }
+    }
+
+    public void calculateChange() {
+        int amountInCents = this.inputProcessor.getCents();
+        CoinType currency = this.inputProcessor.getCurrencyCode();
+        String changeMessage = this.coinCalculator.calculateChange(amountInCents, currency);
+        System.out.println(changeMessage);
+    }
 }

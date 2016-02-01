@@ -45,8 +45,8 @@ public class ChangeInputTest {
 
     @Test
     public void inputShouldParseCorrectly() throws IOException {
-        String[] inputSet = {"3.00 USD", "3.01 USD", "0.95 USD"};
-        int[] correctCents = {300, 301, 95};
+        String[] inputSet = {"3.00 USD", "3.01 USD", "0.95 USD", "365.12 USD"};
+        int[] correctCents = {300, 301, 95, 36512};
         for (int i = 0; i < inputSet.length; i++) {
             changeInput.setInput(inputSet[i]);
             changeInput.parseInput();

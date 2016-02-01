@@ -11,9 +11,11 @@ import com.ben.currencies.CoinType;
 public class CoinCalculator {
 
 
+    private int coinCount;
+
     public String calculateChange(int amountInCents, CoinType currencyCode) {
         Currency c = CurrencyFactory.createCoins(currencyCode);
-        int coinCount = 0;
+        coinCount = 0;
         int[] coins = c.getCoins();
         for (int x = 0; x < coins.length; x++){
             while (amountInCents > coins[x]-1) {
@@ -22,9 +24,13 @@ public class CoinCalculator {
             }
         }
         if (coinCount > 0) {
-            return coins + " coins";
+            return coinCount + " coins";
         } else {
             return "No coins returned";
         }
+    }
+
+    public int getCoinCount () {
+        return coinCount;
     }
 }

@@ -20,7 +20,7 @@ public class CurrencyFactory {
                 d = new EUcoins();
                 break;
             default:
-                throw new IllegalArgumentException("Invalid currency code");
+                throw new IllegalArgumentException("CurrencyFactory: Invalid currency code");
         }
 
         return d;

@@ -21,7 +21,7 @@ public class ChangeInputTest {
     }
 
     @Test
-    public void parseShouldBeRejected() {
+    public void inputShouldBeRejected() {
         String[] inputSet = {"US", "0 USD", ".00 USD", "0.000 USD"};
         for (String input : inputSet) {
             changeInput.setInput(input);

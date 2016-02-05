@@ -2,7 +2,9 @@ import com.ben.CoinCalculator;
 import com.ben.currencies.CoinType;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 
 
@@ -14,64 +16,99 @@ import java.util.ArrayList;
  */
 public class CoinCalculatorTest {
 
-    ArrayList<int[]> changeArrays = new ArrayList<int[]>();
-    ArrayList<int[]> coinsArrays = new ArrayList<int[]>();
     CoinCalculator coinCalculator;
 
     @Before
     public void setUp() {
 
         coinCalculator = new CoinCalculator();
-        int[] USDchange =        {1, 4, 5, 9, 10, 11, 15, 25, 51, 52, 79, 100, 179};
-        int[] USDcoinsReturned = {1, 4, 1, 5,  1,  2,  2,  1,  2,  3,  6,   1,   7};
-
-        int[] EUchange =        {1, 2, 3, 5, 12, 14, 19, 20, 70, 160, 262};
-        int[] EUcoinsReturned = {1, 1, 2, 1,  2,  3,  4,  1,  2,   3,   4};
-
-        assertEquals(USDchange.length, USDcoinsReturned.length);
-        changeArrays.add(USDchange);
-        coinsArrays.add(USDcoinsReturned);
-
-        assertEquals(EUchange.length, EUcoinsReturned.length);
-        changeArrays.add(EUchange);
-        coinsArrays.add(EUcoinsReturned);
 
     }
 
+
+    /* USD coin tests */
     @Test
-    public void shouldReturnCorrectCoins() {
-
-        assertEquals(changeArrays.size(), coinsArrays.size());
-        CoinType[] coinType = CoinType.values();
-
-        int amount;
-        int actualCoins, correctCoins;
-
-        for (int i = 0; i < changeArrays.size(); i++) {
-
-            int[] amountTestSet = changeArrays.get(i);
-            int[] coinsTestSet = coinsArrays.get(i);
-
-            for (int j = 0; j < amountTestSet.length; j++) {
-                amount = amountTestSet[j];
-                actualCoins = coinsTestSet[j];
-                coinCalculator.calculateChange(amount, coinType[i]);
-                correctCoins = coinCalculator.getCoinCount();
-                assertEquals(actualCoins, correctCoins);
-            }
-        }
-
-    }
-
-    @Test
-    public void zeroChangeMeansYouGetZeroCoins() {
+    public void zeroUSDCentMeansYouGetZeroCoins() {
 
         String coinMessage = coinCalculator.calculateChange(0, CoinType.USD);
         assertEquals("No coins returned", coinMessage);
 
-        coinMessage = coinCalculator.calculateChange(0, CoinType.EU);
-        assertEquals("No coins returned", coinMessage);
     }
 
+    @Test
+    public void seventeenUSDCentsMeansYouGetFourCoins() {
+
+        String coinMessage = coinCalculator.calculateChange(17, CoinType.USD);
+        assertEquals("4 coins", coinMessage);
+
+    }
+
+    @Test
+    public void twentyFiveUSDCentsMeansYouGetOneCoin () {
+
+        String coinMessage = coinCalculator.calculateChange(25, CoinType.USD);
+        assertEquals("1 coins", coinMessage);
+
+    }
+
+    @Test
+    public void oneHundredEightyUSDCentsMeansYouGetFourCoins () {
+
+        String coinMessage = coinCalculator.calculateChange(180, CoinType.USD);
+        assertEquals("4 coins", coinMessage);
+
+    }
+
+    @Test
+    public void threeHundredOneUSDCentsMeansYouGetFourCoins () {
+
+        String coinMessage = coinCalculator.calculateChange(301, CoinType.USD);
+        assertEquals("4 coins", coinMessage);
+
+    }
+
+
+
+
+    /* EU coin tests */
+    @Test
+    public void zeroEUCentMeansYouGetZeroCoins () {
+
+        String coinMessage = coinCalculator.calculateChange(0, CoinType.EU);
+        assertEquals("No coins returned", coinMessage);
+
+    }
+
+    @Test
+    public void seventeenEUCentsMeansYouGetThreeCoins() {
+
+        String coinMessage = coinCalculator.calculateChange(17, CoinType.EU);
+        assertEquals("3 coins", coinMessage);
+
+    }
+
+    @Test
+    public void twentyFiveEUCentsMeansYouGetTwoCoins() {
+
+        String coinMessage = coinCalculator.calculateChange(25, CoinType.EU);
+        assertEquals("2 coins", coinMessage);
+
+    }
+
+    @Test
+    public void oneHundredEightyEUCentsMeansYouGetFourCoins() {
+
+        String coinMessage = coinCalculator.calculateChange(180, CoinType.EU);
+        assertEquals("4 coins", coinMessage);
+
+    }
+
+    @Test
+    public void threeHundredOneEUCentsMeansYouGetThreeCoins () {
+
+        String coinMessage = coinCalculator.calculateChange(301, CoinType.EU);
+        assertEquals("3 coins", coinMessage);
+
+    }
 
 }

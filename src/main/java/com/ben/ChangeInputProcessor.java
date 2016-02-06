@@ -12,37 +12,51 @@ import java.util.regex.Pattern;
  */
 public class ChangeInputProcessor {
 
-    public ChangeInputProcessor () {
-        StringBuilder builder = new StringBuilder("^(\\d+)\\.(\\d{2})\\s(");
+    public ChangeInputProcessor() {
+
+        pattern = Pattern.compile(CURRENCY_REGEX);
+
+    }
+
+    private static final String CURRENCY_REGEX =
+            String.format("^(\\d+)\\.(\\d{2})\\s(%s)$", coinTypes());
+
+    private static String coinTypes() {
+        StringBuilder builder = new StringBuilder();
         for (CoinType currencyCode : CoinType.values()) {
             builder.append("(" + currencyCode + ")|");
         }
-        builder.deleteCharAt(builder.length()-1);
-        builder.append(")$");
-        CURRENCY_REGEX = builder.toString();
-        pattern = Pattern.compile(CURRENCY_REGEX);
+        builder.deleteCharAt(builder.length() - 1);
 
-        builder.delete(0, builder.length());
+        return builder.toString();
+    }
+
+    private static final String USER_PROMPT = userPrompt();
+
+    private static String userPrompt() {
+        StringBuilder builder = new StringBuilder();
+
         builder.append("Please enter change as x.xx <currency code>.\n");
         builder.append("Use one of the following currencies:\n");
         for (CoinType currencyCode : CoinType.values()) {
             builder.append(currencyCode + "\n");
         }
         builder.append("For example: 365.12 " + CoinType.values()[0] + "\n");
-        userPrompt = builder.toString();
+
+        return builder.toString();
+
     }
-    private String CURRENCY_REGEX;
+
     private Pattern pattern;
     private Matcher matcher;
 
     private CoinType currencyCode;
     private int cents = -1;
     private String inputString;
-    String userPrompt;
 
-    public void getUserInput () {
+    public void getUserInput() {
         Scanner in = new Scanner(System.in);
-        System.out.println(userPrompt);
+        System.out.println(USER_PROMPT);
         inputString = in.nextLine();
         matcher = pattern.matcher(inputString);
     }
@@ -53,7 +67,7 @@ public class ChangeInputProcessor {
             throw new IOException(
                     "Error in parseInput(): no input set");
         }
-        if (matcher.matches()){
+        if (matcher.matches()) {
             cents = 0;
             String left = matcher.group(1);
             String right = matcher.group(2);
@@ -67,7 +81,7 @@ public class ChangeInputProcessor {
         }
     }
 
-    public int getCents () {
+    public int getCents() {
         return cents;
     }
 
